@@ -1,4 +1,4 @@
-import { fstat, readFile } from 'fs';
+import { readFile } from 'fs';
 
 export class ReadFromFile {
   /*
