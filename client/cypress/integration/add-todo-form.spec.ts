@@ -1,4 +1,5 @@
 import { AddTodoPage } from '../support/add-todo.po';
+import { Todo } from 'src/app/todos/todo';
 describe('Add Todo', () => {
   const page = new AddTodoPage();
 
@@ -52,6 +53,69 @@ describe('Add Todo', () => {
     //entering a valid category should clear the error
     page.getFormField('category').clear().type('Test category').blur();
     cy.get('[data-test=categoryError]').should('not.exist');
+
+    //There should not be an error after nothing has happened yet
+    cy.get('[data-test=bodyError').should('notExist');
+    //Clicking the body field without entering anything should result in an error
+    page.getFormField('body').click().blur();
+    cy.get('[data-test=bodyError').should('exist').and('be.visible');
+    //After typing a reasonable "body" in the todo should result in no error.
+    page.getFormField('body').type('A reasonable text for the body of a todo').blur();
+    cy.get('[data-test=bodyError]').should('not.exist');
+    //After typing an unreasonably long text in the "body" section, there should be an error.
+    page.getFormField('body').type('A placeholder for an unreasonably long amount of text').blur();
+    cy.get('[data-test=bodyError]').should('exist').and('be.visible');
+  });
+
+
+  describe('Adding a new todo', () => {
+
+    beforeEach(() => {
+      cy.task('seed:database');
+    });
+
+    it('Should go to the right page and have the right info', () => {
+      const todo: Todo = {
+        _id: null,
+        owner: 'test Owner',
+        category: 'test category',
+        status: false,
+        body: 'Some test string for the body'
+      };
+
+      page.addTodo(todo);
+
+      // New URL should end in the 24 hex character Mongo ID of the newly added todo
+      cy.url()
+        .should('match', /\/users\/[0-9a-fA-F]{24}$/)
+        .should('not.match', /\/users\/new$/);
+
+      cy.get('.todo-card-owner').should('have.text', todo.owner);
+      cy.get('.todo-card-category').should('have.text', todo.category);
+      cy.get('.todo-card-body').should('have.text', todo.body);
+      cy.get('.todo-card-status').should('be.true', todo.status);
+
+      //We should see the confirmation message at the bottom of the screen
+      cy.get('.mat-simple-snackbar').should('contain', `Added Todo ${todo._id}`);
+    });
+
+    it('Should fail with no category', () => {
+      const todo: Todo = {
+        _id: null,
+        owner: 'test Owner',
+        category: null, //This is null, so we should run into errors
+        status: false,
+        body: 'Some test string for the body'
+      };
+
+      page.addTodo(todo);
+
+      //Continue here and proceed to check for errors
+
+    });
+
   });
 
 });
+
+

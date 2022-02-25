@@ -17,4 +17,14 @@ export class AddTodoPage {
     return cy.get(`mat-form-field [formcontrolname=${fieldName}]`);
   }
 
+
+  addTodo(newTodo: Todo) {
+    this.getFormField('owner').type(newTodo.owner);
+    this.getFormField('category').type(newTodo.category);
+    if (newTodo.status === true){
+      this.getFormField('status').click();
+    }
+    this.getFormField('body').type(newTodo.body);
+  }
+
 }
