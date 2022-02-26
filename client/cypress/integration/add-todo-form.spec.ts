@@ -1,5 +1,7 @@
 import { AddTodoPage } from '../support/add-todo.po';
 import { Todo } from 'src/app/todos/todo';
+import { ReadFromFile } from '../support/read-from-file';
+
 describe('Add Todo', () => {
   const page = new AddTodoPage();
 
@@ -63,7 +65,7 @@ describe('Add Todo', () => {
     page.getFormField('body').type('A reasonable text for the body of a todo').blur();
     cy.get('[data-test=bodyError]').should('not.exist');
     //After typing an unreasonably long text in the "body" section, there should be an error.
-    page.getFormField('body').type('A placeholder for an unreasonably long amount of text').blur();
+    page.getFormField('body').type(new ReadFromFile('../fixtures/long_test_string.txt').read()).blur();
     cy.get('[data-test=bodyError]').should('exist').and('be.visible');
   });
 
