@@ -12,7 +12,7 @@
             <mat-label>Owner</mat-label>
             <input matInput placeholder="Owner" formControlName="owner" required>
             <mat-error *ngFor="let validation of addTodoValidationMessages.owner">
-              <mat-error class=error-messages data-test="owner-error"
+              <mat-error class=error-messages data-test="ownerError"
                 *ngIf="addTodoForm.get('owner').hasError(validation.type) && (addTodoForm.get('owner').dirty || addTodoForm.get('owner').touched)">
                 {{validation.message}}
               </mat-error>
@@ -28,7 +28,7 @@
             <mat-label>Category</mat-label>
             <input matInput placeholder="Category" formControlName="category" required>
             <mat-error *ngFor="let validation of addTodoValidationMessages.category">
-              <mat-error class=error-messages data-test="category-error"
+              <mat-error class=error-messages data-test="categoryError"
                 *ngIf="addTodoForm.get('category').hasError(validation.type) && (addTodoForm.get('category').dirty || addTodoForm.get('category').touched)">
                 {{validation.message}}
               </mat-error>
@@ -39,7 +39,7 @@
             <mat-label>Description</mat-label>
             <textarea matInput placeholder="Enter todo description." formControlName="body" required></textarea>
             <mat-error *ngFor="let validation of addTodoValidationMessages.body">
-              <mat-error class=error-messages data-test="body-error"
+              <mat-error class=error-messages data-test="bodyError"
                 *ngIf="addTodoForm.get('body').hasError(validation.type) && (addTodoForm.get('body').dirty || addTodoForm.get('body').touched)">
                 {{validation.message}}
               </mat-error>

@@ -37,7 +37,7 @@ export class AddTodoComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder, private todoService: TodoService, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private todoService: TodoService, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.createForms();
