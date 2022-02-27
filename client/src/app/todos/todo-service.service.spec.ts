@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { TodoService } from './todo-service.service';
 
-describe('TodoServiceService', () => {
+describe('TodoService', () => {
   let service: TodoService;
 
   beforeEach(() => {
