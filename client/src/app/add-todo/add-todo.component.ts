@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Todo } from '../todos/todo';
-import { TodoService } from '../todos/todo-service.service';
+import { TodoService } from '../todos/todo.service';
 
 @Component({
   selector: 'app-add-todo',
