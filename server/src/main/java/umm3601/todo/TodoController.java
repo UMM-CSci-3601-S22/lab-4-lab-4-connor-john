@@ -61,7 +61,7 @@ public class TodoController {
     todoCollection.deleteOne(eq("_id", new ObjectId(id)));
   }
 
-  public void getTodos(Context ctx, Object Objects) {
+  public void getTodos(Context ctx) {
 
     List<Bson> filters = new ArrayList<>();
 
@@ -98,6 +98,10 @@ public class TodoController {
        // Verify that the provided age is > 0
       .check(tdo -> tdo.body != null && tdo.body.length() > 0, "Todo must have a non-empty todo body")
       .get();
+
+      todoCollection.insertOne(newTodo);
+      ctx.status(HttpCode.OK);
+      ctx.json(Map.of("id", newTodo._id));
   }
 }
 // Fix the addNewTodo, and add status and continue here.
