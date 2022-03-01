@@ -104,4 +104,3 @@ public class TodoController {
       ctx.json(Map.of("id", newTodo._id));
   }
 }
-// Fix the addNewTodo, and add status and continue here.
