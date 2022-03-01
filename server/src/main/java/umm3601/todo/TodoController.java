@@ -97,6 +97,8 @@ public class TodoController {
       .check(tdo -> tdo.category != null && tdo.category.length() > 0, "Todo must have a non-empty todo category")
        // Verify that the provided age is > 0
       .check(tdo -> tdo.body != null && tdo.body.length() > 0, "Todo must have a non-empty todo body")
+      .check(tdo -> {if(tdo.status == true|| tdo.status == false) {return true;}
+      else{return false;}}, "Todo must have a status") //Unsure if this actually works?
       .get();
 
       todoCollection.insertOne(newTodo);

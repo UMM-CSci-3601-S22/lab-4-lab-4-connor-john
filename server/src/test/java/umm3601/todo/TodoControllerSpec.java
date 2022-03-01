@@ -173,7 +173,7 @@ public class TodoControllerSpec {
   @Test
   public void canGetTodosWithCategory() throws IOException {
 
-    mockReq.setQueryString("category=videogames");
+    mockReq.setQueryString("category=video games");
     Context ctx = mockContext("api/todos");
     todoController.getTodos(ctx);
 
@@ -184,14 +184,14 @@ public class TodoControllerSpec {
 
     assertEquals(1, resultTodos.length); //Only one with category "videogames"
     for (Todo todo : resultTodos) {
-      assertEquals("vidoegames", todo.category);
+      assertEquals("video games", todo.category);
     }
   }
 
   @Test
   public void canGetTodosWithBody() throws IOException {
 
-    mockReq.setQueryString("body=Sometestbody"); //This doesn't test partial body searches
+    mockReq.setQueryString("body=Some test body"); //This doesn't test partial body searches
     Context ctx = mockContext("api/todos");
     todoController.getTodos(ctx);
 
@@ -209,7 +209,7 @@ public class TodoControllerSpec {
   @Test
   public void canGetTodosWithSpecifiedOwnerAndCategory() throws IOException {
 
-    mockReq.setQueryString("owner=Fry&category=videogames");
+    mockReq.setQueryString("owner=Fry&category=video games");
     Context ctx = mockContext("api/todos");
     todoController.getTodos(ctx);
 
@@ -256,7 +256,7 @@ public class TodoControllerSpec {
   public void respondsAppropriatelyToNonexistentID() throws IOException {
     Context ctx = mockContext("api/todos", Map.of("id", "58af3a600343927e48e87335"));
 
-    assertThrows(BadRequestResponse.class, () -> {
+    assertThrows(NotFoundResponse.class, () -> {
       todoController.getTodo(ctx);
     });
   }
