@@ -19,7 +19,13 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-checkbox aria-label="Status" labelPosition="before" unchecked="true" formControlName="status" [checked]=true data-test="statusCheckbox">Complete: </mat-checkbox>
+          <mat-checkbox
+            aria-label="Status"
+            labelPosition="before"
+            formControlName="status"
+            [checked]="false"
+            data-test="statusCheckbox"
+          >Complete: </mat-checkbox>
 
         </mat-card-content>
 

@@ -1,18 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { TodoService } from 'src/app/todos/todo.service';
+import { Todo } from '../app/todos/todo';
 
-import { TestBed } from '@angular/core/testing';
-
-import { Todo } from './todo';
-
-import { TodoService } from './todo.service';
-
-describe('TodoService', () => {
-  // TODO: Fix null injector thing
-  let service: TodoService;
-
-  //A small sample of test Todos
-  const testTodos: Todo[] = [
+@Injectable()
+export class MockTodoService extends TodoService {
+  //pulled from Lab 3
+  static testTodos: Todo[] = [
     {
       _id: '58895985a22c04e761776d54',
       owner: 'Blanche',
@@ -44,20 +38,19 @@ describe('TodoService', () => {
     }
   ];
 
-  let httpClient: HttpClient;
-  let httpTestingController: HttpTestingController;
+  constructor() {
+    super(null);
+  }
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
-    });
-    service = TestBed.inject(TodoService);
-    httpTestingController = TestBed.inject(HttpTestingController);
-    service = new TodoService(httpClient);
-  });
+  getTodos(filters: {owner?: string; status: boolean; category?: string; body?: string }): Observable<Todo[]> {
+    return of(MockTodoService.testTodos);
+  }
 
-  afterEach(() => {
-    // After every test, assert that there are no more pending requests.
-    httpTestingController.verify();
-  });
-});
+  getTodoById(id: string): Observable<Todo> {
+    if (id === MockTodoService.testTodos[0]._id) {
+      return of(MockTodoService.testTodos[0]);
+    } else {
+      return of(null);
+    }
+  }
+}
