@@ -91,14 +91,13 @@ public class TodoController {
 
   public void addNewTodo(Context ctx) {
     Todo newTodo = ctx.bodyValidator(Todo.class)
-       // Verify that the todo has a name that is not blank
+      // Verify that the todo has a name that is not blank
       .check(tdo -> tdo.owner != null && tdo.owner.length() > 0, "Todo must have a non-empty todo owner")
        // Verify that the provided email is a valid email
       .check(tdo -> tdo.category != null && tdo.category.length() > 0, "Todo must have a non-empty todo category")
        // Verify that the provided age is > 0
       .check(tdo -> tdo.body != null && tdo.body.length() > 0, "Todo must have a non-empty todo body")
-      .check(tdo -> {if(tdo.status == true|| tdo.status == false) {return true;}
-      else{return false;}}, "Todo must have a status") //Unsure if this actually works?
+      .check(tdo -> tdo.status || !tdo.status, "Todo must have a boolean in status")
       .get();
 
       todoCollection.insertOne(newTodo);

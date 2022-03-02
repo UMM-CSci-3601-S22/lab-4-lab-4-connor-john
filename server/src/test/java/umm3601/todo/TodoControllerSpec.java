@@ -261,4 +261,132 @@ public class TodoControllerSpec {
     });
   }
 
+  @Test
+  public void canAddTodo() throws IOException {
+
+    String testNewTodo = "{"
+      + "\"owner\": \"Fry\","
+      + "\"category\": \"video games\","
+      + "\"body\": \"Another test body\","
+      + "\"status\": true,"
+      + "}";
+
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/todos");
+
+    todoController.addNewTodo(ctx);
+
+    assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
+
+    String result = ctx.resultString();
+    String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
+    assertNotEquals("", id);
+    System.out.println(id);
+
+    assertEquals(1, db.getCollection("todos").countDocuments(eq("_id", new ObjectId(id))));
+
+    //verify todo was added to the database and the correct ID
+    Document addedTodo = db.getCollection("todos").find(eq("_id", new ObjectId(id))).first();
+    assertNotNull(addedTodo);
+    assertEquals("Fry", addedTodo.getString("owner"));
+    assertEquals(true, addedTodo.getBoolean("status"));
+    assertEquals("video games", addedTodo.getString("category"));
+    assertEquals("Another test body", addedTodo.getString("body"));
+  }
+
+  @Test
+  public void respondsAppropriatelyToInvalidOwner() throws IOException {
+
+    String testNewTodo = "{"
+      + "\"category\": \"video games\","
+      + "\"body\": \"Another test body\","
+      + "\"status\": true,"
+      + "}";
+
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/todos");
+
+    assertThrows(ValidationException.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+  @Test
+  public void respondsAppropriatelyToInvalidCategory() throws IOException {
+
+    String testNewTodo = "{"
+      + "\"owner\": \"Fry\","
+      + "\"body\": \"Another test body\","
+      + "\"status\": true,"
+      + "}";
+
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/todos");
+
+    assertThrows(ValidationException.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+  @Test
+  public void respondsAppropriatelyToInvalidBody() throws IOException {
+
+    String testNewTodo = "{"
+      + "\"owner\": \"Fry\","
+      + "\"category\": \"video games\","
+      + "\"status\": true,"
+      + "}";
+
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/todos");
+
+    assertThrows(ValidationException.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+    @Test
+  public void respondsAppropriatelyToInvalidStatus() throws IOException {
+
+    String testNewTodo = "{"
+      + "\"owner\": \"Fry\","
+      + "\"category\": \"video games\","
+      + "\"body\": \"Another test body\","
+      + "}";
+
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/todos");
+
+    assertThrows(ValidationException.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+  @Test
+  public void canDeleteTodo() throws IOException {
+
+    String testID = samsId.toHexString();
+
+    // Todo exists before deletion
+    assertEquals(1, db.getCollection("todos").countDocuments(eq("_id", new ObjectId(testID))));
+
+    Context ctx = mockContext("api/todos", Map.of("id", testID));
+    todoController.deleteTodo(ctx);
+
+    assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
+
+    // Todo is no longer in the database
+    assertEquals(0, db.getCollection("todos").countDocuments(eq("_id", new ObjectId(testID))));
+  }
+
 }
