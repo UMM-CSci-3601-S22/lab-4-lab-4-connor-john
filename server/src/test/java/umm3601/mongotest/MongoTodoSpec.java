@@ -2,7 +2,6 @@ package umm3601.mongotest;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.gt;
 import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
@@ -132,7 +131,7 @@ public class MongoTodoSpec {
   }
 
   @Test
-  public void ShouldBeIncomplete() {
+  public void shouldBeIncomplete() {
     FindIterable<Document> documents
       = todoDocuments.find(and(eq("status", false),
       eq("category", "groceries")));
@@ -142,7 +141,7 @@ public class MongoTodoSpec {
   }
 
   @Test
-  public void JustOwnerAndBody() {
+  public void justOwnerAndBody() {
     FindIterable<Document> documents
       = todoDocuments.find().projection(fields(include("owner", "body")));
     List<Document> docs = intoList(documents);
@@ -198,7 +197,7 @@ public class MongoTodoSpec {
       )
     );
     List<Document> docs = intoList(documents);
-    assertEquals(2, docs.size(), "Should be two distinct ages");
+    assertEquals(2, docs.size(), "Should be two distinct statuses");
     assertEquals(false, docs.get(0).get("_id"));
     assertEquals(1, docs.get(0).get("statusCount"));
     assertEquals(true, docs.get(1).get("_id"));

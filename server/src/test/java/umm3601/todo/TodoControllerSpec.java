@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,7 +78,7 @@ public class TodoControllerSpec {
 
     MongoCollection<Document> todoDocuments = db.getCollection("todos");
     todoDocuments.drop();
-    List<Document> testTodos= new ArrayList<>();
+    List<Document> testTodos = new ArrayList<>();
     testTodos.add(
       new Document()
       .append("owner", "Blance")
