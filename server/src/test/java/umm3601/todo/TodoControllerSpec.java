@@ -85,21 +85,21 @@ public class TodoControllerSpec {
       .append("owner", "Blance")
       .append("body", "Some test body")
       .append("category", "software design")
-      //.append("status", "false")
+      .append("status", "false")
     );
     testTodos.add(
       new Document()
       .append("owner", "Fry")
       .append("body", "Another meaningless test body")
       .append("category", "video games")
-      //.append("status", "false")
+      .append("status", "false")
     );
     testTodos.add(
       new Document()
       .append("owner", "Barry")
       .append("body", "Once again, another test body that has no meaning")
       .append("category", "groceries")
-      //.append("status", "false")
+      .append("status", "false")
     );
 
     samsId = new ObjectId();
@@ -268,7 +268,7 @@ public class TodoControllerSpec {
       + "\"owner\": \"Fry\","
       + "\"category\": \"video games\","
       + "\"body\": \"Another test body\","
-      + "\"status\": true,"
+      + "\"status\": true"
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -302,7 +302,7 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"category\": \"video games\","
       + "\"body\": \"Another test body\","
-      + "\"status\": true,"
+      + "\"status\": true"
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -321,7 +321,7 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"owner\": \"Fry\","
       + "\"body\": \"Another test body\","
-      + "\"status\": true,"
+      + "\"status\": true"
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -340,7 +340,7 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"owner\": \"Fry\","
       + "\"category\": \"video games\","
-      + "\"status\": true,"
+      + "\"status\": true"
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -360,6 +360,7 @@ public class TodoControllerSpec {
       + "\"owner\": \"Fry\","
       + "\"category\": \"video games\","
       + "\"body\": \"Another test body\","
+      + "\"status\": \"beans\""
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
