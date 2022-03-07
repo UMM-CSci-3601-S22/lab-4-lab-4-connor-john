@@ -3,9 +3,9 @@ package umm3601.todo;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
-@SuppressWarnings({"VisibilityModifier"})
+@SuppressWarnings({ "VisibilityModifier" })
 public class Todo{
-  @SuppressWarnings({"MemberName"})
+  @SuppressWarnings({ "MemberName" })
   @ObjectId @Id
   public String _id;
 

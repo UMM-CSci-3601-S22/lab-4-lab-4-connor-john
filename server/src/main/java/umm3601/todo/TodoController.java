@@ -46,7 +46,7 @@ public class TodoController {
     } catch (IllegalArgumentException e) {
       throw new BadRequestResponse("The requested todo id wasn't a legal Mongo Object ID.");
     }
-    if (todo== null) {
+    if (todo == null) {
       throw new NotFoundResponse("The requested todo was not found");
     } else {
       ctx.json(todo);
