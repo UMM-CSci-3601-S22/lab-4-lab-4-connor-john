@@ -6,6 +6,7 @@ import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { TodosComponent } from './todos/todos.component';
+import { TodoProfileComponent } from './todos/todo-profile/todo-profile.component';
 
 // Note that the `users/new` route needs to come before
 // the `users/:id` route. If `users/:id` came first, it
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'users', component: UserListComponent},
   {path: 'users/new', component: AddUserComponent},
   {path: 'users/:id', component: UserProfileComponent},
+  {path: 'todos/:id', component: TodoProfileComponent},
   {path: 'todos/new', component: AddTodoComponent},
   {path: 'todos', component: TodosComponent}
 ];
