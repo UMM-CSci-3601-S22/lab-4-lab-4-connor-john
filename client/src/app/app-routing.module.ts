@@ -18,9 +18,9 @@ const routes: Routes = [
   {path: 'users', component: UserListComponent},
   {path: 'users/new', component: AddUserComponent},
   {path: 'users/:id', component: UserProfileComponent},
-  {path: 'todos/:id', component: TodoProfileComponent},
+  {path: 'todos', component: TodosComponent},
   {path: 'todos/new', component: AddTodoComponent},
-  {path: 'todos', component: TodosComponent}
+  {path: 'todos/:id', component: TodoProfileComponent}
 ];
 
 @NgModule({
