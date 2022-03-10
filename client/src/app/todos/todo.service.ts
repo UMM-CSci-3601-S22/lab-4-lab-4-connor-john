@@ -36,4 +36,21 @@ export class TodoService {
   addTodo(newTodo: Todo): Observable<string> {
     return this.httpClient.post<{id: string}>(this.todoUrl, newTodo).pipe(map(res => res.id));
   }
+
+  filterTodos(todos: Todo[], filters: {category?: string; body?: string }): Todo[] {
+    let filteredTodos = todos;
+
+    if (filters.category) {
+      filters.category = filters.category.toLowerCase();
+      filteredTodos = filteredTodos.filter(todo => todo.category.toLowerCase().indexOf(filters.category) !== -1);
+    }
+    if (filters.body) {
+      filters.body = filters.body.toLowerCase();
+      filteredTodos = filteredTodos.filter(todo => todo.body.toLowerCase().indexOf(filters.body) !== -1);
+    }
+    return filteredTodos;
+  }
+  getTodoById(id: string): Observable<Todo> {
+    return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
+  }
 }
