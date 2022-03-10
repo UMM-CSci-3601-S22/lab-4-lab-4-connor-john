@@ -19,6 +19,7 @@ export class TodosComponent implements OnInit {
   public body: string;
   public category: string;
 
+
   constructor(private todoService: TodoService, private snackBar: MatSnackBar) {
   }
 
