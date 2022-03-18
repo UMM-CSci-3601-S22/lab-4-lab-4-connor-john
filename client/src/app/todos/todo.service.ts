@@ -12,7 +12,7 @@ export class TodoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getTodos(filters?: {owner?: string; category?: string; status: boolean; body?: string}): Observable<Todo[]> {
+  getTodos(filters?: {owner?: string; category?: string; status?: boolean; body?: string}): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.owner) {
@@ -24,16 +24,46 @@ export class TodoService {
       if (filters.body) {
         httpParams = httpParams.set('body', filters.body);
       }
-      //status can't be null, and so will always have a value
-      httpParams = httpParams.set('status', filters.status);
+
+      if (filters.status) {
+        httpParams = httpParams.set('status', filters.status);
       }
 
       return this.httpClient.get<Todo[]>(this.todoUrl, {
         params: httpParams,
       });
     }
+  }
 
   addTodo(newTodo: Todo): Observable<string> {
     return this.httpClient.post<{id: string}>(this.todoUrl, newTodo).pipe(map(res => res.id));
+  }
+
+  filterTodos(todos: Todo[], filters: {owner?: string; category?: string; status?: boolean; body?: string}): Todo[] {
+    let filteredTodos = todos;
+
+    if (filters.owner) {
+      filters.owner = filters.owner.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) >= 0);
+    }
+
+    if (filters.category) {
+      filters.category = filters.category.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => todo.category.toLowerCase().indexOf(filters.category) >= 0);
+    }
+
+    if (filters.body) {
+      filters.body = filters.body.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => todo.body.toLowerCase().indexOf(filters.body) >= 0);
+    }
+
+    if (filters.status) {
+      filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
+    }
+
+    return filteredTodos;
   }
 }
