@@ -75,7 +75,7 @@ public class TodoController {
     }
 
     if (ctx.queryParamMap().containsKey(STATUS_KEY)) {
-      filters.add(where(STATUS_KEY + "== true"));
+      filters.add(eq(STATUS_KEY, Boolean.parseBoolean(ctx.queryParam(STATUS_KEY))));
     }
 
     String sortBy = Objects.requireNonNullElse(ctx.queryParam("sortby"), "owner");
