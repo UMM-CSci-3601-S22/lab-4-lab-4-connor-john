@@ -30,14 +30,14 @@ describe('Todo list', () => {
       .should('not.contain.text', 'groceries')
       .should('not.contain.text', 'homework');
   });
-
+/*
   it('Should select a status, and check it return the correct elements', () =>{
       page.selectStatus('complete');
       page.getTodoListItems().each($todo => {
           cy.wrap($todo).find('.todo-list-status').should('have.text', 'true');
       });
   });
-
+*/
   it('Should click add todo and go to the right URL', () => {
     // Click on the button for adding a new todo
     page.addTodoButton().click();
