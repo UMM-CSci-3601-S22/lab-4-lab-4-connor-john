@@ -75,10 +75,10 @@ public class TodoController {
     }
 
     if (ctx.queryParamMap().containsKey(STATUS_KEY)) {
-      if (ctx.queryParam(STATUS_KEY) == "Incomplete"){
+      if (ctx.queryParam(STATUS_KEY) == "Incomplete") {
         filters.add(exists(STATUS_KEY, false));
       }
-      if (ctx.queryParam(STATUS_KEY) == "Complete"){
+      if (ctx.queryParam(STATUS_KEY) == "Complete") {
         filters.add(exists(STATUS_KEY, true));
       }
     }
