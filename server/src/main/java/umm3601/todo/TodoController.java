@@ -3,7 +3,7 @@ package umm3601.todo;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
-import static com.mongodb.client.model.Filters.where;
+import static com.mongodb.client.model.Filters.exists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,19 +63,24 @@ public class TodoController {
     List<Bson> filters = new ArrayList<>();
 
     if (ctx.queryParamMap().containsKey(OWNER_KEY)) {
-      filters.add(regex(OWNER_KEY, Pattern.quote(ctx.queryParam(OWNER_KEY)), "i"));
+      filters.add(regex(OWNER_KEY, Pattern.quote(ctx.queryParam(OWNER_KEY)), "?i"));
     }
 
     if (ctx.queryParamMap().containsKey(CATEGORY_KEY)) {
-      filters.add(regex(CATEGORY_KEY, Pattern.quote(ctx.queryParam(CATEGORY_KEY)), "i"));
+      filters.add(regex(CATEGORY_KEY, Pattern.quote(ctx.queryParam(CATEGORY_KEY)), "?i"));
     }
 
     if (ctx.queryParamMap().containsKey(BODY_KEY)) {
-      filters.add(regex(BODY_KEY, Pattern.quote(ctx.queryParam(BODY_KEY)), "i"));
+      filters.add(regex(BODY_KEY, Pattern.quote(ctx.queryParam(BODY_KEY)), "?i"));
     }
 
     if (ctx.queryParamMap().containsKey(STATUS_KEY)) {
-      filters.add(where(STATUS_KEY + "== true"));
+      if (ctx.queryParam(STATUS_KEY) == "Incomplete") {
+        filters.add(exists(STATUS_KEY, false));
+      }
+      if (ctx.queryParam(STATUS_KEY) == "Complete") {
+        filters.add(exists(STATUS_KEY, true));
+      }
     }
 
     String sortBy = Objects.requireNonNullElse(ctx.queryParam("sortby"), "owner");

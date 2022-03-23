@@ -36,6 +36,8 @@ import { UserService } from './users/user.service';
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { TodosComponent } from './todos/todos.component';
 import { TodoService } from './todos/todo.service';
+import { TodoProfileComponent } from './todos/todo-profile/todo-profile.component';
+import { TodoCardComponent } from './todos/todo-card/todo-card.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -67,6 +69,8 @@ const MATERIAL_MODULES: any[] = [
     AddUserComponent,
     AddTodoComponent,
     TodosComponent,
+    TodoProfileComponent,
+    TodoCardComponent,
   ],
   imports: [
     BrowserModule,
